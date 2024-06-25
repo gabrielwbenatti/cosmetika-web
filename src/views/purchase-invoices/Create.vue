@@ -4,12 +4,32 @@ import purchaseInvoicesService from "@/services/purchaseInvoicesService";
 import thirdiesService from "@/services/thirdiesService";
 import { onMounted, ref } from "vue";
 
+import AutoComplete from "primevue/autocomplete";
+import DatePicker from "primevue/datepicker";
+import InputNumber from "primevue/inputnumber";
+import Button from "primevue/button";
+
 const suppliers = ref([]);
+const filteredSuppliers = ref([]);
 const invoice = ref({});
+
+const search = (event) => {
+    if (event.query.trim() === "") {
+        filteredSuppliers.value = suppliers.value;
+    } else {
+        filteredSuppliers.value = suppliers.value.filter((supplier) => {
+            return supplier.name
+                .toLowerCase()
+                .includes(event.query.toLowerCase());
+        });
+    }
+};
 
 onMounted(async () => {
     const response = await thirdiesService.getAllThirdies({ isSupplier: true });
-    if (response.status === 200) suppliers.value = response.data;
+    if (response.status === 200) {
+        suppliers.value = response.data;
+    }
 });
 
 async function save() {
@@ -19,72 +39,46 @@ async function save() {
 </script>
 
 <template>
-    <VAutocomplete
-        v-model="invoice.supplier"
-        :items="suppliers"
-        :return-object="true"
-        :item-title="'name'"
-        :label="'Fornecedor'"
-        :variant="'outlined'"
-    />
+    <div class="card">
+        <label for="supplier">Fornecedor</label>
+        <AutoComplete
+            v-model="invoice.supplier"
+            :inputId="'supplier'"
+            :suggestions="filteredSuppliers"
+            :option-label="'name'"
+            @complete="search"
+        />
 
-    <div class="labeled__input">
-        <label class="labeled__input-label" for="issuanceDate"
-            >Data de Emissão</label
-        >
-        <input
-            class="labeled__input-input"
-            type="date"
-            name="issuanceDate"
-            id="issuanceDate"
+        <label for="issuanceDate">Data de Emissão</label>
+        <DatePicker
             v-model="invoice.issuanceDate"
+            :inputId="'issuanceDate'"
+            :date-format="'dd/mm/yy'"
+            :showOnFocus="false"
         />
-    </div>
 
-    <div class="labeled__input">
-        <label class="labeled__input-label" for="entryDate"
-            >Data de Entrada</label
-        >
-        <input
-            class="labeled__input-input"
-            type="date"
-            name="entryDate"
-            id="entryDate"
+        <label for="entryDate">Data de Entrada</label>
+        <DatePicker
             v-model="invoice.entryDate"
+            :inputId="'entryDate'"
+            :date-format="'dd/mm/yy'"
+            :showOnFocus="false"
         />
-    </div>
 
-    <div class="labeled__input">
-        <label class="labeled__input-label" for="entryDate">Valor total</label>
-        <input
-            class="labeled__input-input"
-            type="number"
-            name="totalAmount"
-            id="totalAmount"
+        <label for="totalAmount">Valor total</label>
+        <InputNumber
             v-model="invoice.totalAmount"
+            :inputId="'totalAmount'"
+            :minFractionDigits="2"
+            :maxFractionDigits="2"
         />
+
+        <Button @click="save">Salvar</Button>
     </div>
-
-    <button type="button" @click="save">Salvar</button>
-
-    <datalist id="suppliers">
-        <option v-for="supplier in suppliers">{{ supplier.rowid }}</option>
-    </datalist>
 </template>
 
 <style scoped>
-.labeled__input {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1em;
-
-    .labeled__input-input {
-        padding: 8px;
-        width: 60vw;
-    }
-
-    .labeled__input-label {
-        margin-bottom: 0.3em;
-    }
+.tst {
+    max-width: 100%;
 }
 </style>
