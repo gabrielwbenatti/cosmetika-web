@@ -15,7 +15,11 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-    <ProductForm :isEditMode="true" :initialData="product" />
+    <ProductForm
+        :isEditMode="true"
+        :initialData="product"
+        :formTitle="product.name"
+    />
 </template>
 
 <style scoped></style>

@@ -30,9 +30,5 @@ async function save() {
 </script>
 
 <template>
-    <ProductForm
-        :isEditMode="false"
-        :initialData="product"
-        @onSubmit="save"
-    ></ProductForm>
+    <ProductForm :isEditMode="false" :initialData="product" @onSubmit="save" />
 </template>

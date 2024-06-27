@@ -1,6 +1,7 @@
 <script setup>
+import Checkbox from "primevue/checkbox";
+
 import BaseForm from "@/components/shared/BaseForm.vue";
-import { ref } from "vue";
 
 const emits = defineEmits(["onSubmit"]);
 
@@ -11,10 +12,6 @@ const props = defineProps({
 </script>
 
 <template>
-    <h2 v-if="props.isEditMode">{{ props.initialData.name }}</h2>
-    <h2 v-else>Novo Cadastro</h2>
-    <br />
-
     <BaseForm :mainRoute="'products'" @onSubmit="emits('onSubmit')">
         <div class="labeled__input">
             <label for="reference" class="labeled__input-label"
@@ -57,34 +54,28 @@ const props = defineProps({
         </div>
 
         <div>
-            <input
-                type="checkbox"
-                name="status"
-                id="status"
+            <Checkbox
                 v-model="props.initialData.status"
-                class="checkbox"
+                :inputId="'status'"
+                :binary="true"
             />
             <label for="status">Status</label>
         </div>
 
-        <div style="display: block">
-            <input
-                type="checkbox"
-                name="toSell"
-                id="toSell"
+        <div>
+            <Checkbox
                 v-model="props.initialData.toSell"
-                class="checkbox"
+                :inputId="'toSell'"
+                :binary="true"
             />
             <label for="toSell">Para Vender</label>
         </div>
 
         <div>
-            <input
-                type="checkbox"
-                name="toBuy"
-                id="toBuy"
+            <Checkbox
                 v-model="props.initialData.toBuy"
-                class="checkbox"
+                :inputId="'toBuy'"
+                :binary="true"
             />
             <label for="toBuy">Para Comprar</label>
         </div>

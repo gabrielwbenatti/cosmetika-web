@@ -1,19 +1,17 @@
 <script setup>
+import Checkbox from "primevue/checkbox";
+
 import BaseForm from "@/components/shared/BaseForm.vue";
+
+const emits = defineEmits(["onSubmit"]);
 
 const props = defineProps({
     initialData: { type: Object, default: () => ({}) },
-    isEditMode: { type: Boolean, required: true },
+    isEditMode: { type: Boolean, default: false },
 });
-
-const emits = defineEmits(["onSubmit"]);
 </script>
 
 <template>
-    <h2 v-if="props.isEditMode">{{ props.initialData.name }}</h2>
-    <h2 v-else>Novo Cadastro</h2>
-    <br />
-
     <BaseForm :mainRoute="'thirdies'" @onSubmit="emits('onSubmit')">
         <div class="labeled__input">
             <label for="name" class="labeled__input-label">Nome</label>
@@ -54,35 +52,12 @@ const emits = defineEmits(["onSubmit"]);
         </div>
 
         <div>
-            <input
-                type="checkbox"
-                name="isSupplier"
-                id="isSupplier"
+            <Checkbox
                 v-model="props.initialData.isSupplier"
-                class="checkbox"
+                :inputId="'isSupplier'"
+                :binary="true"
             />
             <label for="isSupplier">É Fornecedor</label>
         </div>
     </BaseForm>
 </template>
-
-<style scoped>
-.labeled__input {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1em;
-
-    .labeled__input-input {
-        padding: 8px;
-        width: 60vw;
-    }
-
-    .labeled__input-label {
-        margin-bottom: 0.3em;
-    }
-}
-
-.checkbox {
-    margin-right: 0.3em;
-}
-</style>

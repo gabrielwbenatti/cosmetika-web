@@ -4,6 +4,7 @@ import Button from "primevue/button";
 
 const props = defineProps({
     mainRoute: { type: String, required: true },
+    formTitle: { type: String, default: "Novo Cadastro" },
 });
 
 const emits = defineEmits(["onSubmit"]);
@@ -13,6 +14,9 @@ const onCancel = () => router.push(`/${props.mainRoute}`);
 </script>
 
 <template>
+    <!-- <h2 v-show="props.formTitle">{{ props.formTitle }}</h2> -->
+    <br />
+
     <form action="">
         <slot> </slot>
 
