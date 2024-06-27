@@ -1,16 +1,37 @@
-html {
+:root {
+    font-size: 15px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    margin: 0;
-    min-height: 100%;
+}
+
+html {
     overflow-x: hidden;
     overflow-y: auto;
     font-weight: normal;
-    padding: 1rem;
 }
 
-.card {
+body {
+    margin: 0;
+    min-height: 100%;
+    padding: 1rem;
+    max-width: 1200px;
+}
+
+.p-autocomplete-max-w {
     display: flex;
     flex-direction: column;
-    padding: 2rem;
+}
+
+.labeled__input {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-bottom: 1rem;
+
+    .labeled__input-input {
+        padding: 8px;
+        width: 60vw;
+    }
+
+    .labeled__input-label {
+        margin-bottom: 0.3em;
+    }
 }

@@ -16,9 +16,7 @@ const onCancel = () => router.push(`/${props.mainRoute}`);
     <form action="">
         <slot> </slot>
 
-        <Button>Salvar</Button>
-
-        <button type="button" v-on:click="emits('onSubmit')">Salvar</button>
-        <button type="button" @click="onCancel">Cancelar</button>
+        <Button :type="'button'" @click="emits('onSubmit')">Salvar</Button>
+        <Button :type="'button'" @click="onCancel">Cancelar</Button>
     </form>
 </template>

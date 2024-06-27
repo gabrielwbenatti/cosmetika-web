@@ -92,21 +92,6 @@ const props = defineProps({
 </template>
 
 <style scoped>
-.labeled__input {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1em;
-
-    .labeled__input-input {
-        padding: 8px;
-        width: 60vw;
-    }
-
-    .labeled__input-label {
-        margin-bottom: 0.3em;
-    }
-}
-
 .checkbox {
     margin-right: 0.3em;
 }
